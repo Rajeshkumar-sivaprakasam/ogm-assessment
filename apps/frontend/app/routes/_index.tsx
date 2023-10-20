@@ -9,37 +9,6 @@ export default function Index() {
 	);
 }
 
-const ImageRender = ({ imageCode }: { imageCode: string }) => {
-	const staticImage = [
-		'b3-main.svg',
-		'bf-main.svg',
-		'ce-main.svg',
-		'ee-main.svg',
-		'fr-main.svg',
-		'ld-main.svg',
-		'oe-main.svg',
-		'pp-main.svg',
-		'un-main.svg',
-		'wh-main.svg',
-	];
-
-	useEffect(() => {}, [imageCode]);
-
-	return (
-		<img
-			src={`/img/${staticImage.find(e =>
-				e.startsWith(imageCode?.toLowerCase()),
-			)}`}
-			alt={staticImage.find(e => e.startsWith(imageCode?.toLowerCase()))}
-			style={{
-				objectFit: 'cover',
-				height: 'auto',
-				width: '200px',
-			}}
-		/>
-	);
-};
-
 const WinMarketTable: React.FC = () => {
 	const staticImage = [
 		'b3-main.svg',
@@ -67,10 +36,7 @@ const WinMarketTable: React.FC = () => {
 	const fetchData = async () => {
 		try {
 			const response = await axios.get('http://localhost:3001/api/market');
-			console.log(
-				'🚀 ~ file: _index.tsx:79 ~ fetchData ~ response:',
-				response.data,
-			);
+
 			if (response.data) {
 				setData(response.data);
 			}
@@ -80,84 +46,111 @@ const WinMarketTable: React.FC = () => {
 		fetchData();
 	}, []);
 	return (
-		<div
-			style={{
-				display: 'grid',
-				gridTemplateColumns: '500px repeat(10, 1fr)',
-				gap: '1rem',
-				border: 'none',
-			}}
-		>
-			<div style={{ display: 'contents' }}>
-				<h1
+		<div>
+			<div style={{ width: '100%', flexDirection: 'row' }}>
+				<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+					{data?.displayName}
+				</div>
+				<div
+					className="test"
 					style={{
-						padding: '1rem',
-						border: 'none',
-						fontWeight: 800,
+						display: 'flex',
+						justifyContent: 'flex-end',
+						width: '100vw',
 					}}
 				>
-					{data?.displayName}
-				</h1>
-				{data?.bookmakers?.map((col, idx) => (
+					{/* <div style={{ display: "flex", flexDirection: "row" }}> */}
+					<div style={{ width: '30%' }}></div>
 					<div
-						key={idx}
 						style={{
-							height: '100px',
-							width: '50px',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							borderRadius: '20px',
-							backgroundColor: `${getRandomColor()}`,
-							position: 'relative',
-							overflow: 'hidden',
+							display: 'grid',
+							justifyContent: 'flex-end',
+							gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
+							columnGap: '20px',
+							flex: 1,
 						}}
 					>
-						<img
-							src={`/img/${staticImage.find(e =>
-								e.startsWith(col?.bookmakerCode?.toLowerCase()),
-							)}`}
-							alt={staticImage.find(e =>
-								e.startsWith(col?.bookmakerCode?.toLowerCase()),
-							)}
-							style={{
-								width: '100px',
-								position: 'absolute',
-								top: '50%',
-								left: '50%',
-								transform: 'translate(-50%, -50%) rotate(-90deg)',
-								padding: '8px',
-							}}
-						/>
+						{data?.bookmakers?.map((col, idx) => (
+							<div
+								key={idx}
+								style={{
+									height: '100px',
+									width: 'auto',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+									borderRadius: '20px',
+									backgroundColor: `${getRandomColor()}`,
+									position: 'relative',
+									overflow: 'hidden',
+								}}
+							>
+								<img
+									src={`/img/${staticImage.find(e =>
+										e.startsWith(col?.bookmakerCode?.toLowerCase()),
+									)}`}
+									alt={staticImage.find(e =>
+										e.startsWith(col?.bookmakerCode?.toLowerCase()),
+									)}
+									style={{
+										width: '100px',
+										position: 'absolute',
+										top: '50%',
+										left: '50%',
+										transform: 'translate(-50%, -50%) rotate(-90deg)',
+										padding: '8px',
+									}}
+								/>
+							</div>
+						))}
+						{/* </div> */}
 					</div>
-				))}
+				</div>
 			</div>
 			{data?.bets?.map((row, idx) => (
-				<div key={idx} style={{ display: 'contents' }}>
-					<div
-						style={{
-							padding: '1rem',
-						}}
-					>
+				<div style={{ width: '100%', flexDirection: 'row' }}>
+					<div style={{ display: 'flex', justifyContent: 'flex-start' }}>
 						{row.displayName}
 					</div>
-					{row.odds.map((odd, colIdx) => (
+					<div
+						className="test"
+						style={{
+							display: 'flex',
+							justifyContent: 'flex-end',
+							width: '100vw',
+						}}
+					>
+						{/* <div style={{ display: "flex", flexDirection: "row" }}> */}
+						<div style={{ width: '30%' }}></div>
 						<div
-							key={colIdx}
 							style={{
-								padding: '0.5rem',
-								width: '50px',
-								textAlign: 'center',
-								borderRadius: '20px',
-								display: 'flex',
-								justifyContent: 'center',
-								alignContent: 'center',
-								border: `1px solid ${getRandomColor()}`,
+								display: 'grid',
+								justifyContent: 'flex-end',
+								gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
+								columnGap: '20px',
+								flex: 1,
 							}}
 						>
-							{odd.odds}
+							{row.odds.map((odd, colIdx) => (
+								<div
+									key={colIdx}
+									style={{
+										padding: '0.5rem',
+										width: '50px',
+										textAlign: 'center',
+										borderRadius: '20px',
+										display: 'flex',
+										justifyContent: 'center',
+										alignContent: 'center',
+										border: `1px solid ${getRandomColor()}`,
+									}}
+								>
+									{odd.odds}
+								</div>
+							))}
+							{/* </div> */}
 						</div>
-					))}
+					</div>
 				</div>
 			))}
 		</div>
